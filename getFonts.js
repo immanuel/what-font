@@ -21,8 +21,8 @@ function getFonts(elem) {
             ((elemFont in fontUsage)? fontUsage[elemFont] : 0);
     }
     
-    // Get the same counts for the elem's children tags
-    elem.children().each(function() {
+    // Get the same counts for the elem's children tags (but not script tags)
+    elem.children().not("script").each(function() {
         getFonts($(this));
     });
     
