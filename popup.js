@@ -1,3 +1,15 @@
+// Set the chart font
+// Chart.defaults.global.defaultFontFamily = "'Montserrat', sans-serif";
+var defaultColors = [
+    '#96ccff',
+    '#9eebcf',
+    '#ff725c', 
+    '#a463f2',
+    '#ffde37', 
+];
+var numColors = defaultColors.length;
+
+
 // Send message to content script to get font usage in current tab
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {msg: "getFonts"}, function(response) {
@@ -8,11 +20,15 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 
         var labels = [];
         var data = [];
+        var bgcolors = []
+        var index = 0;
 
         for (var font in response) {
             if (response.hasOwnProperty(font)) {
                 labels.push(font);
                 data.push(response[font]);
+                bgcolors.push(defaultColors[index % numColors]);
+                index++;
             }
         }
 
@@ -21,7 +37,8 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             datasets: [
                 {
                     borderWidth: 1,
-                    data: data
+                    data: data,
+                    backgroundColor: bgcolors
                 }
             ]
         };
