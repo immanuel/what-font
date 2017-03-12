@@ -1,5 +1,7 @@
 // Set the chart font
 Chart.defaults.global.defaultFontFamily = "'Lato', sans-serif";
+Chart.defaults.global.layout = {padding: 10};
+
 var defaultColors = [
     '#96ccff',
     '#9eebcf',

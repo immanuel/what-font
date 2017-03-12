@@ -4,21 +4,68 @@
             What Font
         </title>
         <link href="https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i" rel="stylesheet">
+        <link rel="stylesheet" href="lib/bootstrap.min.css">
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/Chart.bundle.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+        <script src="popup.js"></script>
+
         <style>
+            body {
+                font-family: 'Lato', sans-serif;
+            }
             #char-count-container,
             #char-size-container {
-                width: 400px;
+                width: 600px;
             }
+            .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+                outline: none;
+            }
+            .nav-tabs {
+                border: none;
+            }
+            .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus,
+            .nav-tabs>li.active>a:hover {
+                border: none; 
+            }
+            .nav-tabs>li>a, .nav-tabs>li>a:focus {
+                border: none;
+            }
+            .nav-tabs>li>a:after {
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -2px;
+                width: 0;
+                height: 2px;
+                background-color: #555;
+                content: "";
+                transition: width 0.2s;
+            }
+            .nav-tabs>li.active>a:after {
+                width: 100%;
+            }
+
         </style>
-        <script src="lib/Chart.bundle.min.js"></script>
-        <script src="popup.js"></script>
+
     </head>
     <body>
-        <div id="char-count-container">
-            <canvas id="char-count-chart"></canvas>
-        </div>
-        <div id="char-size-container">
-            <canvas id="char-size-chart"></canvas>
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#char-count-container" data-toggle="tab">Usage</a></li>
+                <li><a href="#char-size-container" data-toggle="tab">Size Distribution</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="char-count-container">
+                    <canvas id="char-count-chart"></canvas>
+                </div>
+                <div class="tab-pane fade" id="char-size-container">
+                    <canvas id="char-size-chart"></canvas>
+                </div>
+            </div>
         </div>
     </body>
 </html>
