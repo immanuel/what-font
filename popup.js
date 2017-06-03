@@ -70,7 +70,7 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var size_labels = []
         for (var fontSize in response.fontSizeUsage) {
             if (response.fontSizeUsage.hasOwnProperty(fontSize)) {
-                size_labels.push(fontSize)
+                size_labels.push(parseInt(fontSize))
             }
         }
 
