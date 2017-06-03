@@ -64,61 +64,65 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         // Display line chart for distribution of size and font
         var size_ctx = document.getElementById("char-size-chart");
 
-        /*
-        size_data = [
-            {label:'lato', bgclor: blue, data: []}, 
-            {label:'lato', bgclor: blue, data: []}, 
-            {label:'lato', bgclor: blue
-                data: [{
-                    x: -5,
-                    y: 0
-                }, {
-                    x: 0,
-                    y: 15
-                }, {
-                    x: 20,
-                    y: 5
-                }]
-
-            }
-        ]
-        */
-
         var fontSizeCount;
         var size_data_length = size_data.length;
-        console.log(response.fontSizeUsage);
+        var size_labels = []
         for (var fontSize in response.fontSizeUsage) {
             if (response.fontSizeUsage.hasOwnProperty(fontSize)) {
-                fontSizeCount = response.fontSizeUsage[fontSize];
-
-                // TODO: convert to % distribution
-                for (var i = 0; i < size_data_length; i++) {
-                    size_data[i].data.push({
-                        x: fontSize, 
-                        y: ((size_data[i].label in fontSizeCount) ? fontSizeCount[size_data[i].label] : 0)
-                    });
-                }
+                size_labels.push(fontSize)
             }
         }
 
-        var size_options = {
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }], 
-                yAxes: [{
-                    stacked: 'true'
-                }]
+        size_labels.sort(function(a, b){return a-b})
+        size_labels.forEach(function(fontSize){
+            fontSizeCount = response.fontSizeUsage[fontSize];
+            for (var i = 0; i < size_data_length; i++) {
+                size_data[i].data.push(
+                    (size_data[i].label in fontSizeCount) ? fontSizeCount[size_data[i].label] : 0
+                );
             }
-        };
+        });
 
-        console.log(size_data);
+        for (var i = 0; i<size_labels.length; i++){
+            var size_total = 0
+            for (var j = 0; j<size_data_length; j++){
+                size_total += size_data[j].data[i]
+            }
+            for (var j = 0; j<size_data_length; j++){
+                size_data[j].data[i] = 100.0*size_data[j].data[i]/size_total
+            }
+        }
+
+        var minFont = size_labels[0]
+        var maxFont = size_labels[size_labels.length - 1]
+        var idx = 0
+
+        for (var i = minFont; i < maxFont; i++) {
+            if(i != size_labels[idx]) {
+                size_data.forEach(function(d){
+                    d.data.splice(idx, 0, 0);
+                });
+                size_labels.splice(idx, 0, i);
+            }
+            idx++;
+        }
 
         var charSizeChart = new Chart(size_ctx, {
-            type: 'line', 
-            data: {datasets: size_data},
-            options: size_options
+            type: 'bar', 
+            data: {
+                labels: size_labels,
+                datasets: size_data
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }], 
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
         });
     });
 });

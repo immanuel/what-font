@@ -19,7 +19,7 @@ function getFonts(elem) {
     // TODO: Handle case where ',' is present in the font name within '"'
     if (elemText.length > 0) {
         var elemFont = elem.css("font-family").split(",")[0].replace(/"/g, "").toLowerCase();
-        var elemSize = elem.css("font-size").match('^[0-9.]*')[0]; 
+        var elemSize = Math.round(elem.css("font-size").match('^[0-9.]*')[0]); 
 
         if (elemSize in fontSizeUsage) {
             fontSizeUsage[elemSize][elemFont] = elemText.length + 
