@@ -51,8 +51,9 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         var options = {
             legend: { display: false },
             scales: {
-                xAxes: [{ display: false }],
-                yAxes: [{ gridLines: { display: false } }]
+                xAxes: [{ display: false}],
+                yAxes: [{ gridLines: { display: false }}]
+                        
             }
         };
         var charCountChart = new Chart(ctx, {
@@ -116,10 +117,12 @@ chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             options: {
                 scales: {
                     xAxes: [{
-                        stacked: true
+                        stacked: true,
+                        scaleLabel: { display: true, labelString: 'Font size (px)' }
                     }], 
                     yAxes: [{
-                        stacked: true
+                        stacked: true,
+                        scaleLabel: { display: true, labelString: '% of chars' }
                     }]
                 }
             }
