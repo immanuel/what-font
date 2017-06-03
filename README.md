@@ -1,6 +1,12 @@
 # What Font
 *Chrome plugin to identify font usage on the current website.*
 
+## Install
+
+Available in the [Chrome Webstore](https://chrome.google.com/webstore/detail/what-font/mbmmfmfiglgpcpboljabbhlogbcpebdh). 
+
+## Description
+
 The plugin displays the following charts:
 
 1. Number of characters in each font-family
